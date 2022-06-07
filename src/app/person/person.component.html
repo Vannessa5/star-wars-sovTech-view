@@ -1,0 +1,47 @@
+<p-breadcrumb [model]="breadCrumbItems"></p-breadcrumb>
+
+<div class="widget">
+
+  <h1 class="h1">Manage Persons</h1>
+  <div class="widget-header">
+    <p-table #dt [paginator]="true" [rowsPerPageOptions]="[25,50,75,100]" [rows]="25"
+             [totalRecords]="total" [value]="list" [loading]="isLoading" styleClass="p-datatable-striped">
+      <ng-template pTemplate="caption">
+          <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Search..." [formControl]="formQuery"/>
+                </span>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of cols">
+      <span [title]="col.header" class="d-inline-block text-truncate" style="max-width: 100%">
+        {{col.header}}
+      </span>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template let-list pTemplate="body">
+        <tr>
+          <td *ngFor="let col of cols">
+            <div [ngSwitch]="col.type">
+                 <span *ngSwitchCase="'date'"
+                       [title]="list[col.field] ? (list[col.field]| date : 'yyyy-MM-dd hh:mm a'): 'No Data'"
+                       class="d-inline-block text-truncate" style="max-width: 100%">
+                 {{list[col.field] ? (list[col.field]| date : 'yyyy-MM-dd hh:mm a') : 'No Data'}}
+            </span>
+              <span *ngSwitchCase="'array'"
+                    class="d-inline-block text-truncate" style="max-width: 100%">
+                 {{0}}
+            </span>
+
+              <span *ngSwitchDefault [title]="list[col.field]" class="d-inline-block text-truncate"
+                    style="max-width: 100%"> {{list[col.field]}}</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
